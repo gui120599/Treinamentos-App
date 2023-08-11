@@ -2,28 +2,30 @@
 
 @section('content')
     <div class="bottom-data">
-        <div class="orders">
-            <div class="header form-content">
-                <button class="button button-transparent" onclick="window.history.back()"><i
-                        class='bx bx-chevron-left'></i><span class="text">{{ __('Back') }}</span></button>
+        @include('components.tables.setores')
+        <div class="reminders">
+            <div class="header">
                 <i class='bx bx-receipt'></i>
-                <h3>{{ __('Update Sector') }}: {{ $setor->setor_descricao }}</h3>
+                <h3>{{ __('Add New Sector') }}</h3>
                 <i class='icon-minimizar bx bx-chevron-down'></i>
+                <i class='bx bx-x'></i>
             </div>
             <div class="formulario">
-                <form method="POST" action="{{ route('setores.update', $setor->id) }}" class="form-content">
+                <form method="POST" action="{{ route('setores.store') }}" class="row form-content">
                     @csrf
-                    @method('put')
-                    <div class="coluna-12">
+
+                    <div class="col-8">
                         <label for="setor_descricao" class="label-input">{{ __('Name') }}</label>
                         <input id="setor_descricao" type="text"
                             class="form-input @error('setor_descricao') is-invalid @enderror" name="setor_descricao"
-                            value="{{ $setor->setor_descricao }}" required autocomplete="setor_descricao" autofocus>
+                            placeholder="{{ __('Sector describe') }}" autocomplete="setor_descricao" autofocus
+                            value="{{ old('setor_descricao') }}">
                     </div>
 
-                    <div class="coluna-12">
+                    <div class="col-4">
                         <label for="setor_ativo" class="label-input">{{ __('Sector Activo') }}</label>
-                        <select id="setor_ativo" type="text" class="form-input" name="setor_ativo" required autofocus>
+                        <select id="setor_ativo" type="text" class="form-input" name="setor_ativo" required
+                            autocomplete="setor_ativo" autofocus>
                             <option value="Sim">Sim</option>
                             <option value="Não">Não</option>
                         </select>
@@ -39,8 +41,8 @@
                         </div>
                     @endif
 
-                    <div class="coluna-12">
-                        <button type="submit" class="button button-primary w-100">
+                    <div class="col-12">
+                        <button type="submit" class="button button-primary">
                             {{ __('Save') }}
                         </button>
                     </div>
@@ -48,22 +50,18 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function() {
-            selectOption("{{ $setor->setor_ativo }}");
-        });
 
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
+
             const title = document.getElementById('title-page-nav');
             const icon = document.querySelector('.icon');
             icon.classList.add('bx-map');
             title.textContent = "{{ __('Sectors') }}";
-        });
 
-        function selectOption(value) {
-            let select = $("#setor_ativo");
-            let option = select.find("option[value='" + value + "']");
-            option.prop("selected", true);
-        }
+            title.onclick = function() {
+                window.location.href = "{{ route('setores.index') }}";
+            };
+        });
     </script>
 @endsection

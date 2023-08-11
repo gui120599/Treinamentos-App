@@ -82,7 +82,7 @@
                 <form action="">
                     @guest
                     @else
-                    <div class="title-page-header" onclick="window.location.href ='{{ route('setores.index') }}'">
+                    <div class="title-page-header">
                         <i class='icon bx '></i>
                         <span class="info">
                             <h1 id="title-page-nav"></h1>

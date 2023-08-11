@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdateCargo;
+use App\Models\Cargo;
 use Illuminate\Http\Request;
 
 class CargoController extends Controller
@@ -9,56 +11,69 @@ class CargoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Cargo $cargo)
     {
-        //
+        $cargos = $cargo->all();
+        return view('settings/cargos/cargos', compact('cargos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     *
+     * Função que Mostra a View Edit e insere o valor nos campos do fomrulário para edição
+     *
      */
     public function show(string $id)
     {
-        //
+        if (!$cargo = Cargo::find($id)) {
+            return back();
+        }
+        $cargos = $cargo->all();
+        return view('settings/cargos/edit', compact('cargo', 'cargos'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
-     * Update the specified resource in storage.
+     *
+     * Função que salva no BD
+     *
      */
-    public function update(Request $request, string $id)
+    public function store(StoreUpdateCargo $request)
     {
-        //
+        $data = $request->validated();
+        
+        Cargo::create($data);
+        return redirect()->route('cargos.index')->with('mensagem', 'Cargo cadastrado com sucesso!');
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     *
+     * Função que atualiza dados no BD
+     *
      */
-    public function destroy(string $id)
+    public function update(StoreUpdateCargo $request, Cargo $cargo, string $id)
     {
-        //
+        if (!$cargo = $cargo->find($id)) {
+            return back()->with('mensagem', 'Erro');
+        }
+
+        $cargo->update($request->validated());
+        return redirect()->route('cargos.index')->with('mensagem', 'Cargo atualizado com sucesso!');
+    }
+
+
+    /**
+     *
+     * Função que deleta registro no banco
+     *
+     */
+    public function destroy(string|int $id)
+    {
+        if (!$cargo = Cargo::find($id)) {
+            return back()->with('mensagem', 'Error');
+        }
+        $cargo->delete();
+        return redirect()->route('cargos.index')->with('mensagem', 'Cargo excluido com sucesso!');
     }
 }

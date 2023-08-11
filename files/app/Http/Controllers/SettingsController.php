@@ -11,8 +11,8 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        
-        return view('settings',['titulo' => 'Contato (teste)']);
+
+        return view('settings/settings');
     }
 
     /**
@@ -20,7 +20,7 @@ class SettingsController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**

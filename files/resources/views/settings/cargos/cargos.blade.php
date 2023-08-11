@@ -1,29 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bottom-data bottom-data-formulario">
-        <div class="orders">
+    <div class="bottom-data">
+
+        <div class="reminders">
             <div class="header">
                 <i class='bx bx-receipt'></i>
                 <h3>{{ __('Add New Office') }}</h3>
                 <i class='icon-minimizar bx bx-chevron-down'></i>
-                <i class='bx bx-minus'></i>
+                <i class='bx bx-x'></i>
             </div>
             <div class="formulario">
-                <form method="POST" action="{{ route('setores.store') }}" class="form-content">
+                <form method="POST" action="{{ route('cargos.store') }}" class="row form-content">
                     @csrf
 
-                    <div class="coluna-12">
-                        <label for="setor_descricao" class="label-input">{{ __('Name') }}</label>
-                        <input id="setor_descricao" type="text"
-                            class="form-input @error('setor_descricao') is-invalid @enderror" name="setor_descricao"
-                            required autocomplete="setor_descricao" autofocus>
+                    <div class="col-8">
+                        <label for="cargo_descricao" class="label-input">{{ __('Name') }}</label>
+                        <input id="cargo_descricao" type="text"
+                            class="form-input @error('cargo_descricao') is-invalid @enderror" name="cargo_descricao"
+                            required autocomplete="cargo_descricao" autofocus>
                     </div>
 
-                    <div class="coluna-12">
-                        <label for="setor_ativo" class="label-input">{{ __('Office Activo') }}</label>
-                        <select id="setor_ativo" type="text" class="form-input" name="setor_ativo" required
-                            autocomplete="setor_ativo" autofocus>
+                    <div class="col-4">
+                        <label for="cargo_ativo" class="label-input">{{ __('Office Activo') }}</label>
+                        <select id="cargo_ativo" type="text" class="form-input" name="cargo_ativo" required
+                            autocomplete="cargo_ativo" autofocus>
                             <option value="Sim">Sim</option>
                             <option value="Não">Não</option>
                         </select>
@@ -39,7 +40,7 @@
                         </div>
                     @endif
 
-                    <div class="coluna-12">
+                    <div class="col-12">
                         <button type="submit" class="button button-primary w-100">
                             {{ __('Save') }}
                         </button>
@@ -47,14 +48,19 @@
                 </form>
             </div>
         </div>
+        @include('components.tables.cargos')
     </div>
-    @include('components.tables.setores')
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const title = document.getElementById('title-page-nav');
             const icon = document.querySelector('.icon');
-            icon.classList.add('bx-map');
+            icon.classList.add('bxs-user-badge');
             title.textContent = "{{ __('Positions') }}";
+
+            title.onclick = function() {
+                window.location.href = "{{ route('cargos.index') }}";
+            };
         });
     </script>
 @endsection

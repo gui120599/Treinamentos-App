@@ -706,6 +706,12 @@ body {
     color: var(--success);
 }
 
+.header .sub-header{
+    display: flex;
+    align-items: center;
+    grid-gap: 20px;
+}
+
 @media (width >= 450px) {
     .login{
         width: 380px;

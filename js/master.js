@@ -209,7 +209,9 @@ $(document).ready(function () {
         }
     });
 
-    $(".reminders").hide();
+    if ($(".msg-error").text() === '') {
+        $(".reminders").hide();
+    }
 
     $(".bx-plus").click(function (e) {
         e.preventDefault();
@@ -219,14 +221,14 @@ $(document).ready(function () {
     $(".add-new").click(function (e) {
         e.preventDefault();
         $(".reminders").slideDown();
-        
+
     });
 
-    $(".bx-minus").click(function (e) {
+    $(".bx-x").click(function (e) {
         e.preventDefault();
         $(".reminders").slideUp();
     });
-    
+
 
 
 });
